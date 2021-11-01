@@ -1,0 +1,151 @@
+기존 모듈 복사해오기
+
+1. 기존 프로젝트의 package.json 파일을복사해옵니다.
+2. 터미널에서 npm install을 실행합니다.
+
+
+Router 미들웨어
+사용자의 다양한 요청이 들어왔을 때 use()메소드로 설정한 미들웨어가 항상 호출되는 불편한 점이 있습니다.
+때문에 그를 해결하고자 사용하는 미들웨어가 바로 Router미들웨어입니다.
+
+Router 객체 만들기
+const 라우터객체 = express.Router();
+
+라우터객체.route(요청패스).get(실행할 함수);
+라우터객체.route(요청패스).post(실행할 함수);
+이런식으로 특정페이지를 호출할수가있다.
+
+익스프레스에 Router 객체 적용
+app.use('/', 라우터객체);
+
+
+템플릿 엔진
+EJS(Embedded JavaScript) 모듈
+EJS 모듈은 템플릿 엔진 모듈입니다. 템플릿 엔진 모듈은 특정한 형식인 파일로부터 HTML페이지를 생성하는 모듈
+입니다. 
+
+EJS 파일 형식의 특수 태그
+<% code %> : 자바스크립트 코드를 입력하는 영역을 의미합니다.
+
+<?php
+	php문법
+?>
+
+비슷하다 php랑
+<%
+	자바스크립트문법
+%>
+자바스크립트를 서버대용으로 쓰는것
+즉 php 대신으로 쓰는것임
+<%=변수 또는 값%> : 데이터를 출력합니다.
+
+EJS 데이터를 전달
+render() : 메소드의 (두번쨰...?이거 굳이 안써도된다는데 써봄) 매개 변수에 전달하고자 하는 데이터를 입력하여 전달합니다.
+// ejs는 말그대로 html파일이 하나 들어감 그래서 html형식으로 만들고
+ex) js.render(data);
+이렇게 쓴다함
+
+<p><?=$data?></p>
+
+<p><%=data%></p>
+
+ejs를 사용하려면 ejs모듈을 설치해야함
+npm install ejs를 해주어야함
+
+이 랜더링 해주는게뭐냐면 ejs를 받아다가 html화를 해주는애다.
+html로 바까준다는 얘기임
+
+<%-변수 또는 객체%> : ejs파일 전체를 전달합니다.
+
+
+ejs.render(data);
+PUG(jade)
+http://jade-lang.com/
+나중에 필요하다하면 공부를 좀 해야함 이라고 말씀하셨다.
+
+
+PUG(jade)
+http://jade-lang.com/
+
+
+Jade 데이터를 전달
+compile()	: jade를 html로 컴파일(랜더링)
+jade객체(매개변수) : 매개변수를 전달
+
+
+jade에서 div이면서 id가 header이란 뜻 = #header
+
+
+
+Node.js에서 메일보내기
+Node.js에서는 다른 사용자에게 메일을 보내는 방법이있는데
+
+nodemailer 모듈이라는게있는데
+일단 자기의gmail 을 이용하여 보내는거라 gmail서버를 이용하여 메일을 보낼 수 있습니다.
+
+
+https://myaccount.google.com/lesssecureapps
+여기서 허용시켜줘야함
+
+https://accounts.google.com/DisplayUnlockCaptcha
+
+const nodemailer = require('nodemailer');
+//npm install nodemailer
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth:{
+        user: '발신자메일주소',
+        pass: '발신자메일비밀번호'
+    },
+    host: 'smtp.mail.com',
+    port: '465'
+});
+
+const mailOptions = {
+    form: "발신자이름 <보내는이 메일>",
+    to: "수신자이름 <받는이 메일>",
+    subject : "node.js의 nodemailer 테스트중입니다.",
+    text: "안녕하세요. 메일이 잘 전달되나요??"
+
+    html: "HTML코드 작성"
+};
+이런식으로 HTML도 보낼수있음
+transporter.sendMail(mailOptions,(err,info) => {
+    transporter.close();
+    if(err){
+        console.log(err);
+    }else{
+        console.log(info);
+    }
+});
+
+이 양식이다.
+
+
+
+mail.html
+메일보내기
+보내는 사람 : [	]
+받는 사람 :   [	]
+보내는 이메일 : [	]
+받는 이메일 : [	]
+내용
+[		]
+	보내기버튼
+
+보내기 버튼을 누르는순간
+localhost:3000/mail_ok라는 곳에가서 
+여기서 메일 전송이 완료되는 것
+
+
+
+static 미들웨어 (serve_static 모듈)
+특정 폴더를 파일들을 특정 패스로 접근할 수 있도록 만들어줍니다. 예를들어 public 폴더에 있는 모든 파일을
+웹 서버의 루트 패스로 접근할 수 있도록 만들 수 있습니다.
+
+서버
+[public] : apple.png
+localhost:3000/public/apple.png      ->     localhost:3000/apple.png 이런식으로 원래있는위치가 아닌 다른위치로
+변경시켜줄수도 있는 이런방법을 static 미들웨어가 해줄수있다 이러면 보안상 좋다
+실제 경로가 아닌데도 저렇게 입력하면 받아갈수있기때문에 사용자들이  실제위치를 들키지않고 제공가능
+
