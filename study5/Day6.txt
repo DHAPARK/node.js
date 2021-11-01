@@ -1,0 +1,14 @@
+multer 모듈
+일반적인 파일 업로드를 위한 익스프레스 사용시 적용하는 미들웨어 입니다.
+
+express 쓸떄만 사용가능
+
+-- npm install multer
+-- 파일을 업로드할 폴더를 만듭니다.
+-- multer의 diskStorage 메소드에 설정 작성을 합니다.
+
+multer() : 생성자에 diskStorage 설정과 파일 크기를 설정합니다.
+//이 설정들은 multer()객체에 합니다.
+destination : 저장될 폴더를 설정합니다.
+filename : 저장될 파일 네임을 설정합니다.
+
