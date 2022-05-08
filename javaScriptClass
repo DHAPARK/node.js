@@ -1,0 +1,37 @@
+class Person{
+    constructor (vacc,phone,cnt){
+        //백신종류
+        this.vacc = vacc;
+        //휴대폰번호
+        this.phone = phone;
+        //접종횟수
+        this.cnt = cnt;
+    }
+
+    isFinished(){
+        if(this.cnt == 2){
+            return '접종 완료';
+        }else if(this.cnt == 1){
+            return '추가 1회';
+        }else if(this.cnt == 0){
+            return '미 접종';
+        }
+    }
+
+    addShot(){
+        if(this.cnt == 2)return;
+        this.cnt += 1;
+    }
+    changeTel(value){
+        this.phone = value;
+    }
+}
+
+let person1 = new Person('화이자','010-2312-8723',0);
+console.log(`백신종류 : ${person1.vacc}, 연락처 : ${person1.phone} 접종현황 : ${person1.isFinished()}`);
+person1.addShot();
+console.log(`백신종류 : ${person1.vacc}, 연락처 : ${person1.phone} 접종현황 : ${person1.isFinished()}`);
+
+console.log(`연락처 변경 후 출력`);
+person1.changeTel('010-6543-7968');
+console.log(`백신종류 : ${person1.vacc}, 연락처 : ${person1.phone} 접종현황 : ${person1.isFinished()}`);
